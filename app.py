@@ -21,15 +21,13 @@ df_cleaned.columns = ["Texte", "Stars", "Length", "Cleaned Text"]
 
 
 def index_input_callback():
-    ## jibly m dataset l texte ely fl index ely houwa 7atou
     st.session_state['options'] = df.iloc[index_input]['text']
 
 
 def aleatoire_callback():
-    ## ken houwa y7eb avis m dataset aleatoirement
     random_index = np.random.randint(df.shape[0], size=1)[0]
-    st.session_state['index_input'] = random_index  ## l random index bech yetkteb fl blasa te3 l input te3 l ar9am
-    st.session_state['options'] = df.iloc[index_input]['text']  ##yjib l text mte3 l index l aleatoire
+    st.session_state['index_input'] = random_index
+    st.session_state['options'] = df.iloc[index_input]['text']
 
 
 def _max_width_():
@@ -91,7 +89,7 @@ with st.expander(" 💡 How to use this app ") :
 with st.expander("🎯 Topic Moodeling Steps"):
     etape_1, etape_2, etape_3, etape_4 = st.columns(4)
     etape_1.info("❶ Data cleaning and pre-treatment")
-    etape_2.info("❷ Vectorization and modeling")
+    etape_2.info("❷ Data vectorization and modeling")
     etape_3.info("❸ Web application development")
     etape_4.info("❹ Web application deployment")
 with st.expander("📥 Download source code"):
@@ -146,7 +144,7 @@ if detect_topic_btn:
         })
         import altair as alt
 
-        bar_chart = alt.Chart(source).mark_bar().encode(
+        bar_chart = alt.Chart(source).mark_bar(color="#DE3163").encode(
             y='Probabilité:Q',
             x='Topic:O',
         )
