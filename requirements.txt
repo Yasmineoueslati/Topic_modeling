@@ -90,7 +90,7 @@ pure-eval==0.2.2
 pyahocorasick==1.4.4
 pyarrow==8.0.0
 pycparser==2.21
-pydantic==1.10.2
+pydantic
 pydeck==0.7.1
 Pygments==2.11.2
 Pympler==0.9
