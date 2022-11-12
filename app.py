@@ -115,7 +115,7 @@ with st.expander("📥 Download source code"):
         label="Download code",
         data=code_file
     )
-    code_file = open('app.py.', 'r', encoding="utf8").read()
+    code_file = open('app.py', 'r', encoding="utf8").read()
     st.code(code_file, language='python')
 
 st.markdown("<h3> Enter your text below</h3>", unsafe_allow_html=True)
