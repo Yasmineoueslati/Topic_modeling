@@ -15,7 +15,7 @@ st.set_page_config(
     layout="wide",
 )
 
-df = pd.read_csv('data/dataset.csv', sep=",", index_col=None)
+df = pd.read_csv('data/dataset_negative.csv', sep=",", index_col=None)
 df_cleaned = pd.read_csv('data/dataset_cleaned.csv', sep=",", index_col=None)
 df_cleaned.columns = ["Texte", "Stars", "Length", "Cleaned Text"]
 
