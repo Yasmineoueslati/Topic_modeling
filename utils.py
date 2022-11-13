@@ -11,12 +11,13 @@ topics = ['👨‍Staff management', '🍔 Food Quality', '🍕 Pizza', '🍗 Me
            '💁 Customer Service',  '🍣 Sushi and Rice', '🏘️ Place Environnement']
 
 
-def negative_review(sentence):
+def positive_review(sentence):
     sid_obj = SentimentIntensityAnalyzer()
     sentiment_dict = sid_obj.polarity_scores(sentence)
-    if sentiment_dict['compound'] <= 0 :
-        return False
-    return True
+    if sentiment_dict['compound'] > 0.4 :
+        return True
+    return False
+
 
 
 def topics_suggestion(text, nb):

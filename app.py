@@ -7,7 +7,7 @@ from functionforDownloadButtons import download_button
 import os
 import json
 
-from utils import topics_suggestion, negative_review
+from utils import topics_suggestion, positive_review
 
 st.set_page_config(
     page_title="Topic Modeling",
@@ -48,15 +48,16 @@ _max_width_()
 
 with st.sidebar:
     ModelType = st.radio(
-        "Quel texte à analyser ?",
+        "Choose between the two options",
         ["Avis dataset", "Texte libre"],
     )
     if ModelType == "Avis dataset":
-        index_input = st.number_input("Numéro d'index", key="index_input", step=1, min_value=0, max_value=df.shape[0],
+        index_input = st.number_input("Write index number", key="index_input", step=1, min_value=0,
+                                      max_value=df.shape[0],
                                       on_change=index_input_callback)
-        st.button("Aléatoire", on_click=aleatoire_callback)
+        st.button("random", on_click=aleatoire_callback)
 
-    number = st.slider('Nombre de topics', value=3, step=1, min_value=1, max_value=15)
+    number = st.slider('Choose the number of topics', value=3, step=1, min_value=1, max_value=15)
 
     with open('style.css') as f:
         css_component = f'<style>{f.read()}</style>'
@@ -72,8 +73,8 @@ with st.expander("🤔 About Topic Modeling"):
         although there are semi-supervised and supervised variants.""")
     from PIL import Image
 
-    image = Image.open('test.png')
-    st.image(image, caption='Example using LDA')
+    image = Image.open('wordcloud.png')
+    st.image(image, caption='Most frequent words')
     st.markdown("")
 with st.expander("💻️ About this project"):
     st.write(
@@ -82,7 +83,7 @@ with st.expander("💻️ About this project"):
         opinions posted on the customer reviews platform. The project covers the entire cycle of implementation of 
         concept proof, from the pre-treatment of data to the deployment""")
     st.markdown("")
-with st.expander(" 💡 How to use this app ") :
+with st.expander(" 💡 How to use this app "):
     video_file = open('streamlit-topicModeling.webm', 'rb')
     video_bytes = video_file.read()
     st.video(video_bytes)
@@ -92,8 +93,8 @@ with st.expander("🎯 Topic Moodeling Steps"):
     etape_2.info("❷ Data vectorization and modeling")
     etape_3.info("❸ Web application development")
     etape_4.info("❹ Web application deployment")
-with st.expander("📥 Download source code"):
-    col1, col2, col3 = st.columns([1.1, 1, 3])
+with st.expander("📥 Download source code and the dataset"):
+    col1, col2, col3, col4 = st.columns([2.2, 2.9, 3.7, 4])
 
 
     @st.cache
@@ -103,25 +104,40 @@ with st.expander("📥 Download source code"):
 
     csv = convert_df(df)
     col1.download_button(
-        label="Download data as CSV",
+        label="Download data",
         data=csv,
         file_name='large_df.csv',
         mime='text/csv',
     )
-    code_file = open('app.py', 'r', encoding="utf8").read()
+    code_file1 = open('app.py', 'r', encoding="utf8").read()
     col2.download_button(
-        label="Download code",
-        data=code_file
+        label="Download app.py code",
+        data=code_file1
     )
-    code_file = open('app.py', 'r', encoding="utf8").read()
-    st.code(code_file, language='python')
+    st.code(code_file1, language='python')
+
+    code_file2 = open('machine_learning/preprocessing.py', 'r', encoding="utf8").read()
+    col3.download_button(
+        label="Download preprocessing code",
+        data=code_file2
+    )
+    code_file3 = open('machine_learning/build_model.py', 'r', encoding="utf8").read()
+    col4.download_button(
+        label="Download modeling code",
+        data=code_file3
+    )
+
+
+
+
+
 
 st.markdown("<h3> Enter your text below</h3>", unsafe_allow_html=True)
 review = st.text_area("✍ Write the opinion", height=200, max_chars=5000, key='options')
-detect_topic_btn = st.button(label="✨ Détecter le sujet d'insatisfaction")
+detect_topic_btn = st.button(label="✨ Detect the source of dissatisfaction")
 
 if detect_topic_btn:
-    test = negative_review(review)
+    test = positive_review(review)
     if test:
         st.warning("✔ Your opinion is positive, write negative opinion to detect the topic")
     else:
